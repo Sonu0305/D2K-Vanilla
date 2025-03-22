@@ -427,9 +427,13 @@ def update_dashboard(n_clicks, start_date, end_date, team, building, task_type):
         filtered_daily = daily_stats.copy()
     
     # Calculate summary statistics
-    avg_miss_rate = f"{filtered_daily['miss_rate'].mean():.1f}%"
-    total_tasks = f"{int(filtered_daily['task_count'].sum()):,}"
-    on_time_rate = f"{filtered_daily['on_time_rate'].mean():.1f}%"
+    avg_miss_rate = filtered_daily['miss_rate'].mean()
+    on_time_rate = filtered_daily['on_time_rate'].mean()
+    total_tasks = filtered_daily['task_count'].sum()
+
+    avg_miss_rate_display = f"{avg_miss_rate:.1f}% ({np.floor((avg_miss_rate / 100) * total_tasks).astype(int)})"
+    on_time_rate_display = f"{on_time_rate:.1f}% ({np.floor((on_time_rate / 100) * total_tasks).astype(int)})"
+
     
     if 'anomaly' in anomaly_results.columns:
         anomalies = anomaly_results[anomaly_results['anomaly'] == 1]
@@ -736,9 +740,9 @@ def update_dashboard(n_clicks, start_date, end_date, team, building, task_type):
         anomaly_insight = "Anomaly detection data not available."
     
     return (
-        avg_miss_rate,
+        avg_miss_rate_display,
         total_tasks,
-        on_time_rate,
+        on_time_rate_display,
         anomalies_count,
         miss_trend_fig,
         hourly_heatmap_fig,
