@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure Gemini API
-GOOGLE_API_KEY = 'AIzaSyDGGDccSDqbR5VWfa31GCqhf3fQrHKZSO4'
+GOOGLE_API_KEY = GOOGLE_API_KEY
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Set page config
